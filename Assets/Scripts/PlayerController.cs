@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag ("Can") && kicking == true){
             Debug.Log("Poop");
-            other.gameObject.GetComponent<Rigidbody>().AddForce (0.0f, forceApplied, forceApplied);
+            other.gameObject.GetComponent<Rigidbody>().AddForce ((transform.forward+transform.up)*forceApplied);
         }
     }
     private void Kick(){
