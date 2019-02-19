@@ -59,6 +59,8 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag ("Can") && kicking == true){
             Debug.Log("Poop");
             other.gameObject.GetComponent<Rigidbody>().AddForce ((transform.forward+transform.up)*forceApplied);
+            other.gameObject.GetComponent<Rigidbody>().AddTorque(transform.up*(forceApplied/4));
+            other.gameObject.GetComponent<Rigidbody>().AddTorque(transform.right*(forceApplied));
         }
     }
     private void Kick(){
