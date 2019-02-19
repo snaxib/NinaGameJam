@@ -23,47 +23,36 @@ public class PlayerController : MonoBehaviour
         currentClipInfo = anim.GetCurrentAnimatorClipInfo(0);
         clipName = currentClipInfo[0].clip.name;
         Vector3 pos = transform.position;
-        if (Input.GetKey ("w")) {
-            if (clipName != "kick") {
-                anim.Play("walk", -1);
+
+		if (!AreWeKicking())
+		{
+        	if (Input.GetKey ("w")) {
+				SetAnimState(1); // set animation to walk
                 pos += transform.rotation * Vector3.forward * speed;
-            }
-            else{    
-            }
-        }
-        if (Input.GetKey ("s")) {
-            if (clipName != "kick") {
-                anim.Play("walk", -1);
+			}
+        	if (Input.GetKey ("s")) {
+				SetAnimState(1); // set animation to walk
                 pos += transform.rotation * -Vector3.forward * speed;
-            }
-            else{    
-            }  
-        }
-        if (Input.GetKey ("d")) {
-            if (clipName != "kick") {
-                anim.Play("walk", -1);
-                transform.Rotate( Vector3.up,  Time.deltaTime * speedRot);
-            }
-            else{    
-            }
-        }
-        if (Input.GetKey ("a")) {
-            if (clipName != "kick") {
-                anim.Play("walk", -1);
-                transform.Rotate( -Vector3.up,  Time.deltaTime * speedRot);
-            }
-            else{    
-            }
-        }
-        if (Input.GetKey(KeyCode.Space)){
-            anim.Play("kick", -1);
-            Kick();
+        	}
+        	if (Input.GetKey ("d")) {
+				SetAnimState(1); // set animation to walk
+               	transform.Rotate( Vector3.up,  Time.deltaTime * speedRot);
+        	}
+        	if (Input.GetKey ("a")) {
+				SetAnimState(1); // set animation to walk
+            	transform.Rotate( -Vector3.up,  Time.deltaTime * speedRot);
+        	}
+
+			if (Input.GetKey(KeyCode.Space)){
+				Kick();
+			}
+        
         }
         transform.position = pos;
     }
     void LateUpdate() {
         if (!Input.GetKey("w") && !Input.GetKey("a") && !Input.GetKey("s") && !Input.GetKey("d") && !Input.GetKey(KeyCode.Space) && kicking == false){
-            anim.Play("idle",-1);
+			SetAnimState(0); // set animation to idle
         }    
     }
     void OnTriggerEnter(Collider other) {
@@ -75,6 +64,7 @@ public class PlayerController : MonoBehaviour
     private void Kick(){
         if (!kicking){
             kicking = true;
+			SetAnimState(2); // set animation to a kick
             Debug.Log("Kicking Started");
             foreach (CapsuleCollider collider in leg){
                 collider.enabled = true;
@@ -87,8 +77,24 @@ public class PlayerController : MonoBehaviour
         foreach (CapsuleCollider collider in leg){
                 collider.enabled = false;
         }
-        anim.Play("idle", -1);
+		SetAnimState(0); // set animation to idle
         Debug.Log("Kicking Stopped");
     }
     
+	private void SetAnimState(int newState)
+	{
+		if (newState == 2) // if we are kicking, pull a random kick
+			anim.SetInteger("randomKick", Random.Range(0, 3));
+				
+		anim.SetInteger("characterState", newState);
+	}
+
+	private bool AreWeKicking()
+	{
+		if (anim.GetInteger("characterState") == 2 || anim.GetInteger("characterState") == 3)
+		{
+			return true;
+		}
+		return false;
+	}
 }
