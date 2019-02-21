@@ -5,12 +5,14 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 { 
     Animator anim;
+    public Animator collisionAnim;
     Component[] leg;
     public float speed;
     public float speedRot;
     public float forceApplied;
     private bool kicking = false;
-    private float animationDuration = 2.1f;
+    private float animationDuration = 2.33f;
+    private float startToKick = .95f;
     string clipName;
     AnimatorClipInfo[] currentClipInfo;
 
@@ -61,6 +63,7 @@ public class PlayerController : MonoBehaviour
             other.gameObject.GetComponent<Rigidbody>().AddForce ((transform.forward+transform.up)*forceApplied);
             other.gameObject.GetComponent<Rigidbody>().AddTorque(transform.up*(forceApplied/4));
             other.gameObject.GetComponent<Rigidbody>().AddTorque(transform.right*(forceApplied));
+            
         }
     }
     private void Kick(){
@@ -68,12 +71,19 @@ public class PlayerController : MonoBehaviour
             kicking = true;
 			SetAnimState(2); // set animation to a kick
             Debug.Log("Kicking Started");
-            foreach (CapsuleCollider collider in leg){
-                collider.enabled = true;
-            }
+            Invoke("TurnOnKickCollider", startToKick);
             Invoke("StopKicking", animationDuration);
         }
     }
+
+    // we turn on the kick collider 1 second into the kicking animation so early swings back dont do weird things to the can (assuming we didnt want that)
+    private void TurnOnKickCollider(){
+        foreach (CapsuleCollider collider in leg)
+        {
+            collider.enabled = true;
+        }
+    }
+
     private void StopKicking(){
         kicking = false;
         foreach (CapsuleCollider collider in leg){
@@ -89,7 +99,8 @@ public class PlayerController : MonoBehaviour
 			anim.SetInteger("randomKick", Random.Range(0, 3));
 				
 		anim.SetInteger("characterState", newState);
-	}
+        collisionAnim.SetInteger("characterState", newState);
+    }
 
 	private bool AreWeKicking()
 	{
