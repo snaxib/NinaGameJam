@@ -18,7 +18,7 @@ public class TrashController : MonoBehaviour
     }
     void OnTriggerEnter(Collider other){
         if (other.gameObject.CompareTag ("Can")){
-            if (!isFull()){
+            if (!IsFull()){
                 Debug.Log("Score!");
                 gameController.SendMessage("IncrementScore");
                 //Debug.Log(score);
