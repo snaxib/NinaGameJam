@@ -17,7 +17,7 @@ public class GameController : MonoBehaviour
         score = 0;  
         SetScoreText();
         Transform startCan = Instantiate(can, transform.position, transform.rotation);
-        startCan.GetComponent<Rigidbody>().AddForce(TowardsPlayer(player)*-force);
+        startCan.GetComponent<Rigidbody>().AddForce(TowardsObject(player)*-force);
 
     }
 
@@ -31,16 +31,24 @@ public class GameController : MonoBehaviour
     }
     void IncrementScore(){
         score += 1;
-        scoreText.text = "Score: " + score.ToString();
+        SetScoreText();
     }
 
-    Vector3 TowardsPlayer(GameObject player){
+    Vector3 TowardsObject(GameObject player){
         Vector3 direction = transform.position- player.transform.position;
         return direction;
     }
 
-    void SpawnCan(){
-        Transform canClone = Instantiate(can, transform.position, transform.rotation);
-        canClone.GetComponent<Rigidbody>().AddForce(TowardsPlayer(player)*-force);
+    void SpawnCan(bool multi = false){
+        if (!multi){
+            Transform canClone = Instantiate(can, transform.position, transform.rotation);
+            canClone.GetComponent<Rigidbody>().AddForce(TowardsObject(player)*-force);
+        }
+        if (multi){
+            for (int i = 0; i < 3; i++){
+                Transform canClone = Instantiate(can, transform.position, transform.rotation);
+                canClone.GetComponent<Rigidbody>().AddForce(TowardsObject(player)*-force);
+            }
+        }       
     }
 }
