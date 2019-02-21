@@ -6,7 +6,8 @@ public class PlayerController : MonoBehaviour
 { 
     Animator anim;
     public Animator collisionAnim;
-    Component[] leg;
+    public CapsuleCollider[] leg;
+    //Component[] leg;
     public float speed;
     public float speedRot;
     public float forceApplied;
@@ -18,7 +19,7 @@ public class PlayerController : MonoBehaviour
 
     float m_CurrentClipLength;
     private void Start() {
-        leg = GetComponentsInChildren<CapsuleCollider>();
+        //leg = GetComponentsInChildren<CapsuleCollider>(); // handled this in the public variable assignment because we want to keep the player's capsule collider active
         anim = GetComponent<Animator>();
     }
     void Update() {
