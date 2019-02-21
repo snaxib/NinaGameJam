@@ -31,11 +31,11 @@ public class PlayerController : MonoBehaviour
 		{
         	if (Input.GetKey ("w")) {
 				SetAnimState(1); // set animation to walk
-                pos += transform.rotation * Vector3.forward * speed;
+                pos += transform.rotation * Vector3.forward * speed * Time.deltaTime;
 			}
         	if (Input.GetKey ("s")) {
 				SetAnimState(1); // set animation to walk
-                pos += transform.rotation * -Vector3.forward * speed;
+                pos += transform.rotation * -Vector3.forward * speed * Time.deltaTime;
         	}
         	if (Input.GetKey ("d")) {
 				SetAnimState(1); // set animation to walk
