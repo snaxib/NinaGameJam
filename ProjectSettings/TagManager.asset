@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Can
+  - spawner
+  - Empty
+  - Partial
+  - Full
   layers:
   - Default
   - TransparentFX

@@ -60,7 +60,6 @@ public class PlayerController : MonoBehaviour
     }
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag ("Can") && kicking == true){
-            Debug.Log("Poop");
             other.gameObject.GetComponent<Rigidbody>().AddForce ((transform.forward+transform.up)*forceApplied);
             other.gameObject.GetComponent<Rigidbody>().AddTorque(transform.up*(forceApplied/4));
             other.gameObject.GetComponent<Rigidbody>().AddTorque(transform.right*(forceApplied));
@@ -71,7 +70,6 @@ public class PlayerController : MonoBehaviour
         if (!kicking){
             kicking = true;
 			SetAnimState(2); // set animation to a kick
-            Debug.Log("Kicking Started");
             Invoke("TurnOnKickCollider", startToKick);
             Invoke("StopKicking", animationDuration);
         }
@@ -91,7 +89,6 @@ public class PlayerController : MonoBehaviour
                 collider.enabled = false;
         }
 		SetAnimState(0); // set animation to idle
-        Debug.Log("Kicking Stopped");
     }
     
 	private void SetAnimState(int newState)
