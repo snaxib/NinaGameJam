@@ -14,11 +14,15 @@ public class TrashController : MonoBehaviour
     private GameObject empty;
     private GameObject partial;
     private GameObject full;
+    private ParticleSystem confettiSystem;
+
     void Start()
     {
         GetChildren();
         partial.SetActive(false);
         full.SetActive(false);
+
+        confettiSystem = this.GetComponentInChildren<ParticleSystem>();
     }
 
     void LateUpdate() {
@@ -39,6 +43,7 @@ public class TrashController : MonoBehaviour
                 Destroy(other.gameObject);
                 gameController.SendMessage("SpawnCan", multi);
                 fill += 1;
+                FireConfetti();
             }
         }
     }
@@ -61,6 +66,14 @@ public class TrashController : MonoBehaviour
             if(child.gameObject.tag == "Full"){
                 full = child.gameObject;
             }
+        }
+    }
+
+    private void FireConfetti()
+    {
+        if (confettiSystem != null)
+        {
+            confettiSystem.Play();
         }
     }
 
