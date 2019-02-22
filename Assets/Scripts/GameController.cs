@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
@@ -35,7 +36,7 @@ public class GameController : MonoBehaviour
             UpdateTimerUI();
         }
         else if (score >= endScore){
-            endGame.SetActive(true);
+            StartCoroutine( gameEnd() );
         }
     } 
     void SetScoreText(){
@@ -93,4 +94,9 @@ public class GameController : MonoBehaviour
             minuteCount = 0;
         }    
     }
+    private IEnumerator gameEnd(){
+        endGame.SetActive(true);
+        yield return new WaitForSeconds(5);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }   
 }
