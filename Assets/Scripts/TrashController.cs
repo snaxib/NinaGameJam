@@ -34,7 +34,6 @@ public class TrashController : MonoBehaviour
     void OnTriggerEnter(Collider other){
         if (other.gameObject.CompareTag ("Can")){
             if (!IsFull()){
-                Debug.Log("Score!");
                 gameController.SendMessage("IncrementScore");
                 //Debug.Log(score);
                 Destroy(other.gameObject);
@@ -52,10 +51,17 @@ public class TrashController : MonoBehaviour
         }
     }
     void GetChildren(){
-        empty = GameObject.FindGameObjectWithTag("Empty");
-        partial = GameObject.FindGameObjectWithTag("Partial");
-        full = GameObject.FindGameObjectWithTag("Full");
-
+        foreach(Transform child in transform){
+            if(child.gameObject.tag == "Empty"){
+                empty = child.gameObject;
+            }
+          if(child.gameObject.tag == "Partial"){
+                partial = child.gameObject;
+            }
+            if(child.gameObject.tag == "Full"){
+                full = child.gameObject;
+            }
+        }
     }
 
 }

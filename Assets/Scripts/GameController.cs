@@ -8,24 +8,35 @@ public class GameController : MonoBehaviour
     public Transform can;
     public int force;
     public GameObject player;
-    public GameObject trashcan1;
-    public GameObject trashcan2;
     public GameObject spawnTarget;
     private List<Transform> spawners = new List<Transform>();
     private int numSpawners;
     private int score;
     public Text scoreText;
+    public Text timerText;
+    public GameObject endGame;
+    private float secondsCount;
+     private int minuteCount;
+     private int hourCount;
+     public int endScore;
     public Material[] mats;
     // Start is called before the first frame update
     void Start(){
+        endGame.SetActive(false);
         score = 0;  
         SetScoreText();
         GetChildren();
         SpawnCan();
+
     }
     // Update is called once per frame
     void Update(){
-
+        if (score < endScore){
+            UpdateTimerUI();
+        }
+        else if (score >= endScore){
+            endGame.SetActive(true);
+        }
     } 
     void SetScoreText(){
         scoreText.text = "Score: " + score.ToString();
@@ -69,5 +80,17 @@ public class GameController : MonoBehaviour
             Debug.Log("added child");
         }
         numSpawners = spawners.Count;
+    }
+    public void UpdateTimerUI(){
+         //set timer UI
+        secondsCount += Time.deltaTime;
+        timerText.text = hourCount +"h:"+ minuteCount +"m:"+(int)secondsCount + "s";
+        if(secondsCount >= 60){
+            minuteCount++;
+            secondsCount = 0;
+        }else if(minuteCount >= 60){
+            hourCount++;
+            minuteCount = 0;
+        }    
     }
 }
