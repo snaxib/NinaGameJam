@@ -39,8 +39,6 @@ public class FullIndicatorController : MonoBehaviour
             timer += Time.deltaTime * fadeInSpeed;
             imgAlpha = setVisible ? timer : 1f - timer;
 
-            Debug.Log(imgAlpha);
-
             borderImg.color = new Color(borderImg.color.r, borderImg.color.g, borderImg.color.b, imgAlpha);
             fillImg.color = new Color(fillImg.color.r, fillImg.color.g, fillImg.color.b, imgAlpha);
             fillBorderImg.color = new Color(fillBorderImg.color.r, fillBorderImg.color.g, fillBorderImg.color.b, imgAlpha);
