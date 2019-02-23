@@ -54,6 +54,8 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\CameraController.cs" />
+     <Compile Include="Assets\Scripts\CanController.cs" />
+     <Compile Include="Assets\Scripts\FullIndicatorController.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\LaggyFollow.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />

@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/Kanjo-Repede_Precision.unity
+    guid: 37af2aaba02a91240b4c549d54a23425
   m_configObjects: {}
