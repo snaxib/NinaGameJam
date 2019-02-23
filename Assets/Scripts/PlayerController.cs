@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
         clipName = currentClipInfo[0].clip.name;
         Vector3 pos = transform.position;
 
-		if (!AreWeKicking())
+		if (!AreWeKicking() && !AreWeCelebrating())
 		{
         	if (Input.GetKey ("w")) {
 				SetAnimState(1); // set animation to walk
@@ -49,12 +49,16 @@ public class PlayerController : MonoBehaviour
 			if (Input.GetKey(KeyCode.Space)){
 				Kick();
 			}
+
+            if (Input.GetKey(KeyCode.E)) {
+                Celebrate();
+            }
         
         }
         transform.position = pos;
     }
     void LateUpdate() {
-        if (!Input.GetKey("w") && !Input.GetKey("a") && !Input.GetKey("s") && !Input.GetKey("d") && !Input.GetKey(KeyCode.Space) && kicking == false){
+        if (!Input.GetKey("w") && !Input.GetKey("a") && !Input.GetKey("s") && !Input.GetKey("d") && !Input.GetKey(KeyCode.Space) && !AreWeKicking() && !AreWeCelebrating()) { 
 			SetAnimState(0); // set animation to idle
         }    
     }
@@ -102,10 +106,31 @@ public class PlayerController : MonoBehaviour
 
 	private bool AreWeKicking()
 	{
-		if (anim.GetInteger("characterState") == 2 || anim.GetInteger("characterState") == 3)
+		if (anim.GetInteger("characterState") == 2)
 		{
 			return true;
 		}
 		return false;
 	}
+
+    private bool AreWeCelebrating()
+    {
+        if (anim.GetInteger("characterState") == 3)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private void Celebrate()
+    {
+        SetAnimState(3);
+
+        Invoke("StopCelebrating", 1f);
+    }
+
+    private void StopCelebrating()
+    {
+        SetAnimState(0);
+    }
 }
