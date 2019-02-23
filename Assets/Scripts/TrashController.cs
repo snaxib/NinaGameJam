@@ -15,6 +15,7 @@ public class TrashController : MonoBehaviour
     private GameObject partial;
     private GameObject full;
     private ParticleSystem confettiSystem;
+    private FullIndicatorController fullIndicatorScript;
 
     void Start()
     {
@@ -23,10 +24,11 @@ public class TrashController : MonoBehaviour
         full.SetActive(false);
 
         confettiSystem = this.GetComponentInChildren<ParticleSystem>();
+        fullIndicatorScript = this.GetComponentInChildren<FullIndicatorController>();
     }
 
     void LateUpdate() {
-        if (fill == 1 && !IsFull()){
+        if (fill == 2 && !IsFull()){
           empty.SetActive(false);
           partial.SetActive(true);
         }
@@ -44,6 +46,7 @@ public class TrashController : MonoBehaviour
                 gameController.SendMessage("SpawnCan", multi);
                 fill += 1;
                 FireConfetti();
+                FillIndicator();
             }
         }
     }
@@ -74,6 +77,14 @@ public class TrashController : MonoBehaviour
         if (confettiSystem != null)
         {
             confettiSystem.Play();
+        }
+    }
+
+    private void FillIndicator()
+    {
+        if (fullIndicatorScript != null)
+        {
+            fullIndicatorScript.SetCanCount(fill);
         }
     }
 
